@@ -16,7 +16,7 @@ try:
     import aligo
 except ImportError:
   if not launch.is_installed("aligo"):
-    launch.run_pip("install aligo", "install aligo")
+    launch.run_pip("install aligo")
     import aligo
 
 
