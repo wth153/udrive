@@ -151,12 +151,12 @@ def sendcode(code):
 
 
 def upload_file(params):
-    # if udrive.baidu:
-    #     api = BaiduPCSApi(bduss=udrive.k)
-    #     print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
+    if udrive.baidu:
+        api = BaiduPCSApi(bduss=udrive.k)
+        print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
 
-    #     pass
-    # else:
+        pass
+    else:
         if udrive.c:
             lev = 1
         else:
