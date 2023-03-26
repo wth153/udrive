@@ -30,6 +30,9 @@ except ImportError:
     if not launch.is_installed("baidupcs_py"):
         launch.run_pip("install BaiduPCS-Py", "baidupcs_py")
         from baidupcs_py.baidupcs import BaiduPCSApi
+        
+subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/auto.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/auto.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/uvloop.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/uvloop.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 
 class udrive:
     def __init__(self, ):
