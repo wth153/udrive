@@ -30,7 +30,7 @@ except ImportError:
     if not launch.is_installed("baidupcs_py"):
         launch.run_pip("install BaiduPCS-Py", "baidupcs_py")
         from baidupcs_py.baidupcs import BaiduPCSApi
-
+subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/auto.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/auto.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 #通过
 class udrive:
     def __init__(self, ):
@@ -140,6 +140,7 @@ def upload(locpath,dpath):
             print("已上传至" + api.upload_file(locpath,remotepath=dpath)[0])
         except:
             pass
+        print("111")
 
 
 def sendcode(code):
@@ -150,12 +151,12 @@ def sendcode(code):
 
 
 def upload_file(params):
-    if udrive.baidu:
-        api = BaiduPCSApi(bduss=udrive.k)
-        print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
+    # if udrive.baidu:
+    #     api = BaiduPCSApi(bduss=udrive.k)
+    #     print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
 
-        pass
-    else:
+    #     pass
+    # else:
         if udrive.c:
             lev = 1
         else:
