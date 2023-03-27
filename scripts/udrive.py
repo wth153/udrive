@@ -143,8 +143,8 @@ def upload(locpath,dpath):
         try:
             print("已上传至" + api.upload_file(locpath,remotepath=dpath)[0])
         except:
-            pass
-        print("111")
+            print("未成功,请检查输入")
+        
 
 
 def sendcode(code):
