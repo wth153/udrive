@@ -188,6 +188,7 @@ def upload_file(params):
         }
         
         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
+        print(open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb').read())
         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
         print(result)
