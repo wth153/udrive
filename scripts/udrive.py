@@ -28,6 +28,7 @@ try:
     from baidupcs_py.baidupcs import BaiduPCSApi
 except ImportError:
     if not launch.is_installed("baidupcs_py"):
+        subprocess.run("pip install requests-toolbelt aget passlib", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
         launch.run_pip("install BaiduPCS-Py --no-deps", "baidupcs_py --no-deps")
         #launch.run_pip("requests_toolbelt")
         from baidupcs_py.baidupcs import BaiduPCSApi
