@@ -155,6 +155,7 @@ def upload(locpath, dpath):
     try:
         #print("已上传至" + api.upload_file(locpath, remotepath=dpath)[0])
         result = response.json()
+        print(result)
         print(f"已上传至{dpath}")
     except:
         print("未成功,请检查输入")
@@ -189,6 +190,7 @@ def upload_file(params):
         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
+        print(result)
         print(f"已上传{params.filename}")
 
     else:
