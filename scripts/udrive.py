@@ -7,6 +7,7 @@ import threading
 import json
 import launch
 import subprocess
+import requests
 
 import modules.scripts as scripts
 from modules import script_callbacks
