@@ -29,7 +29,7 @@ try:
 except ImportError:
     if not launch.is_installed("baidupcs_py"):
         launch.run_pip("install BaiduPCS-Py --no-deps", "baidupcs_py --no-deps")
-        launch.run_pip("requests_toolbelt")
+        #launch.run_pip("requests_toolbelt")
         from baidupcs_py.baidupcs import BaiduPCSApi
         
 #subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/auto.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/auto.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
