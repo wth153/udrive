@@ -151,7 +151,7 @@ def upload(locpath, dpath):
     result = response.json()
     if not result["path"] =="":
             print(f'已上传至{result["path"]}')
-        else:
+    else:
             print(result)
 
 
