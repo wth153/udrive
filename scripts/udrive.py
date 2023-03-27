@@ -184,17 +184,17 @@ def upload_file(params):
     else:
         if udrive.c:
             lev = 1
-    else:
-        lev = 0
-    if udrive.k:
-        ali = aligo.Aligo(level=lev, refresh_token=udrive.k)
-        path = params.filename
-        path = os.path.split(path)
-        ali.create_folder(name=path[0], check_name_mode="refuse")
-        pathid = ali.get_folder_by_path(path[0]).file_id
-        ali.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",
-                        parent_file_id=pathid)
-        print(f"已上传{params.filename}")
+        else:
+            lev = 0
+        if udrive.k:
+            ali = aligo.Aligo(level=lev, refresh_token=udrive.k)
+            path = params.filename
+            path = os.path.split(path)
+            ali.create_folder(name=path[0], check_name_mode="refuse")
+            pathid = ali.get_folder_by_path(path[0]).file_id
+            ali.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",
+                            parent_file_id=pathid)
+            print(f"已上传{params.filename}")
 
 
 def on_image_saved(params):
