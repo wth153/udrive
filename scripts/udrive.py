@@ -144,13 +144,13 @@ def upload(locpath, dpath):
     files = {'file': open(locpath, 'rb')}
     response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
     result = response.json()
-    print(f"已上传{params.filename}")
+    print(f"已上传{dpath}")
 
 
     try:
         #print("已上传至" + api.upload_file(locpath, remotepath=dpath)[0])
         result = response.json()
-        print(f"已上传{params.filename}")
+        print(f"已上传至{dpath}")
     except:
         print("未成功,请检查输入")
 
@@ -162,11 +162,12 @@ def sendcode(code):
 
 
 def upload_file(params):
+
     if udrive.baidu:
         #         api = BaiduPCSApi(bduss=udrive.k)
         #         print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
         url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={params.filename}'
-        params = {
+        param = {
         "async": 2,
         "onnest": "fail",
         "opera": "rename",
@@ -177,7 +178,7 @@ def upload_file(params):
     }
 
         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
-        response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
+        response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
         print(f"已上传{params.filename}")
 
