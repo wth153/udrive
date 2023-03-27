@@ -141,7 +141,11 @@ def upload(locpath, dpath):
         "app_id": 250528,
         "web": 1
     }
-
+    
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+    }
+    
     files = {'file': open(locpath, 'rb')}
     response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
     result = response.json()
@@ -177,7 +181,11 @@ def upload_file(params):
         "app_id": 250528,
         "web": 1
     }
-
+        
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+        }
+        
         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
