@@ -172,7 +172,7 @@ def upload_file(params):
     if udrive.baidu:
         #         api = BaiduPCSApi(bduss=udrive.k)
         #         print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
-        url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={params.filename}'
+        url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path=/{params.filename}'
         param = {
         "async": 2,
         "onnest": "fail",
@@ -191,8 +191,8 @@ def upload_file(params):
         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
         print(result)
-        print(f"已上传{params.filename}")
-
+        
+        
     else:
         if udrive.c:
             lev = 1
