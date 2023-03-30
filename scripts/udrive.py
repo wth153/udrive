@@ -194,7 +194,7 @@ def upload_file(params):
         
         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
         result = response.json()
-        if not result["path"] =="":
+        if "path" in result :
             print(f'已上传至{result["path"]}')
         else:
             print(result)
