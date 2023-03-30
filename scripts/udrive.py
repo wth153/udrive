@@ -149,7 +149,7 @@ def upload(locpath, dpath):
     files = {'file': open(locpath, 'rb')}
     response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
     result = response.json()
-    if not result["path"] =="":
+    if "path" in result:
             print(f'已上传至{result["path"]}')
     else:
             print(result)
