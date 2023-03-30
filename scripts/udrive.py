@@ -10,6 +10,7 @@ import subprocess
 import requests
 
 import modules.scripts as scripts
+import httpx
 from modules import script_callbacks
 
 from basicsr.utils.download_util import load_file_from_url
@@ -20,19 +21,6 @@ except ImportError:
     if not launch.is_installed("aligo"):
         launch.run_pip("install aligo", "aligo")
         import aligo
-
-
-# try:
-#     from baidupcs_py.baidupcs import BaiduPCSApi
-# except ImportError:
-#     if not launch.is_installed("baidupcs_py"):
-#         subprocess.run("pip install requests-toolbelt aget passlib", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-#         launch.run_pip("install BaiduPCS-Py --no-deps", "baidupcs_py --no-deps")
-#         #launch.run_pip("requests_toolbelt")
-#         from baidupcs_py.baidupcs import BaiduPCSApi
-
-# subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/auto.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/auto.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-# subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/uvloop.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/uvloop.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 
 class udrive:
     def __init__(self, ):
@@ -173,31 +161,31 @@ def sendcode(code):
 def upload_file(params):
 
     if udrive.baidu:
-        #         api = BaiduPCSApi(bduss=udrive.k)
-        #         print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
-        url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path=/{params.filename}'
-        param = {
+        with httpx.Client() as client:
+            param = {
         "async": 2,
         "onnest": "fail",
         "opera": "rename",
-        "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
+        "bdstoken": "2",
         "clienttype": 0,
         "app_id": 250528,
-        "web": 1
-    }
-        
-        headers = {
+        "web": 1,
+        "method":"upload"
+
+            }
+    
+            headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-        }
-        
-        files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
-        
-        response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
-        result = response.json()
-        if "path" in result :
-            print(f'已上传至{result["path"]}')
-        else:
-            print(result)
+            }
+            files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
+
+            repo=client.post("https://pan.baidu.com/rest/2.0/xpan/file?&path=/{params.filename}",
+                    params=param,headers=headers,cookies={"BDUSS":udrive.k},files=files)
+            if "path" in repo.text:
+                
+                print(f'已上传至{repo.text["path"]}')
+            else:
+                print(repo.text)
         
         
     else:
