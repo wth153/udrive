@@ -120,7 +120,7 @@ def on_ui_tabs():
                 locpath = gr.Textbox(label="本地目录")
                 dpath = gr.Textbox(label="网盘目录(加上文件名)")
             btn1 = gr.Button("上传")
-            btn1.click(check, inputs=[locpath, dpath])
+            btn1.click(baiduupload, inputs=[locpath, dpath])
 
             code = gr.Textbox(label="Code")
             btn = gr.Button("执行代码")
@@ -141,22 +141,22 @@ def on_ui_tabs():
 
     return [(drive, "Drive", "drive")]
 
-def check(locpath,dpath):
-    print("开始上传")
-    if os.path.isdir(locpath):
-      for root, dirs, files in os.walk(locpath):
-        for file in files:
-            dir_path = os.path.join(root, file)
-            if dpath[-1]!='/':
-                dpath+='/'
+# def check(locpath,dpath):
+#     print("开始上传")
+#     if os.path.isdir(locpath):
+#       for root, dirs, files in os.walk(locpath):
+#         for file in files:
+#             dir_path = os.path.join(root, file)
+#             if dpath[-1]!='/':
+#                 dpath+='/'
             
             
-            upload(dir_path,dpath+file)
-    else:
-        upload(locpath, dpath)     
-    print("上传结束")
-def upload(locpath, dpath):
-    baiduupload(locpath,dpath)
+#             upload(dir_path,dpath+file)
+#     else:
+#         upload(locpath, dpath)     
+#     print("上传结束")
+# def upload(locpath, dpath):
+#     baiduupload(locpath,dpath)
 #     url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={dpath}'
 #     params = {
 #         "async": 2,
