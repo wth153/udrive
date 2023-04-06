@@ -156,9 +156,7 @@ def check(locpath,dpath):
         upload(locpath, dpath)     
     print("上传结束")
 def upload(locpath, dpath):
-    #api = BaiduPCSApi(bduss=udrive.k)
-    subprocess.run(f"BaiduPCS-Go u {locpath} {dpath}  ", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-
+    baiduupload(locpath,dpath)
 #     url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={dpath}'
 #     params = {
 #         "async": 2,
@@ -189,7 +187,20 @@ def sendcode(code):
 
     print(result.stdout.decode())
 
+def baiduupload(loc,pan):
+    process = subprocess.Popen(f"BaiduPCS-Go u {loc} {pan} ",shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,encoding='utf-8')
 
+    while True:
+        output = process.stdout.readline()
+        if output == '' and process.poll() is not None:
+            break
+        if output:
+            print(output.strip())
+
+    process.communicate() 
+
+    
+    
 def upload_file(params):
 
     if udrive.baidu:
@@ -216,8 +227,8 @@ def upload_file(params):
 #             print(f'已上传至{result["path"]}')
 #         else:
 #             print(result)
-        
-        subprocess.run(f"BaiduPCS-Go u /content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename} /{params.filename}  ", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        loc=f'/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}'
+        baiduupload(loc,params.filename)
     else:
         if udrive.c:
             lev = 1
