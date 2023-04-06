@@ -21,7 +21,19 @@ except ImportError:
         launch.run_pip("install aligo", "aligo")
         import aligo
 
+import subprocess
+import shutil
 
+curl_command = ['curl', '-L', 'https://github.com/qjfoidnh/BaiduPCS-Go/releases/download/v3.9.1/BaiduPCS-Go-v3.9.1-linux-amd64.zip', '--output', 'BaiduPCS-Go-linux-amd64.zip']
+unzip_command = ['unzip', '-o', 'BaiduPCS-Go-linux-amd64.zip']
+copy_command = ['cp', './BaiduPCS-Go-v3.9.1-linux-amd64/BaiduPCS-Go', '/usr/bin']
+
+subprocess.run(curl_command, check=True)
+subprocess.run(unzip_command, check=True)
+shutil.copy('./BaiduPCS-Go-v3.9.1-linux-amd64/BaiduPCS-Go', '/usr/bin')
+        
+        
+        
 # try:
 #     from baidupcs_py.baidupcs import BaiduPCSApi
 # except ImportError:
@@ -54,7 +66,8 @@ class udrive:
             # self.code=[]
             # self.locpath=[]
             # self.dpath=[]
-
+        if self.k:    
+            subprocess.run(f"BaiduPCS-Go login -bduss={self.k}", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 
 udrive = udrive()
 
@@ -63,7 +76,7 @@ def udrive_save(c, baidu, k):
     setattr(udrive, "c", c)
     setattr(udrive, "baidu", baidu)
     setattr(udrive, "k", k)
-
+    subprocess.run(f"BaiduPCS-Go login -bduss={k}", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     udrive_dict = {}
     for attr, value in udrive.__dict__.items():
         udrive_dict[attr] = value
@@ -144,29 +157,30 @@ def check(locpath,dpath):
     print("上传结束")
 def upload(locpath, dpath):
     #api = BaiduPCSApi(bduss=udrive.k)
+    subprocess.run(f"BaiduPCS-Go u {locpath} {dpath}  ", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 
-    url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={dpath}'
-    params = {
-        "async": 2,
-        "onnest": "fail",
-        "opera": "rename",
-        "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
-        "clienttype": 0,
-        "app_id": 250528,
-        "web": 1
-    }
+#     url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={dpath}'
+#     params = {
+#         "async": 2,
+#         "onnest": "fail",
+#         "opera": "rename",
+#         "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
+#         "clienttype": 0,
+#         "app_id": 250528,
+#         "web": 1
+#     }
     
-    headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-    }
+#     headers = {
+#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+#     }
     
-    files = {'file': open(locpath, 'rb')}
-    response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
-    result = response.json()
-    if "path" in result:
-            print(f'已上传至{result["path"]}')
-    else:
-            print(result)
+#     files = {'file': open(locpath, 'rb')}
+#     response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
+#     result = response.json()
+#     if "path" in result:
+#             print(f'已上传至{result["path"]}')
+#     else:
+#             print(result)
 
 
 
@@ -179,33 +193,31 @@ def sendcode(code):
 def upload_file(params):
 
     if udrive.baidu:
-        #         api = BaiduPCSApi(bduss=udrive.k)
-        #         print("已上传至" + api.upload_file(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}",remotepath=f"{params.filename}")[0])
-        url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path=/{params.filename}'
-        param = {
-        "async": 2,
-        "onnest": "fail",
-        "opera": "rename",
-        "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
-        "clienttype": 0,
-        "app_id": 250528,
-        "web": 1
-    }
+#         url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path=/{params.filename}'
+#         param = {
+#         "async": 2,
+#         "onnest": "fail",
+#         "opera": "rename",
+#         "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
+#         "clienttype": 0,
+#         "app_id": 250528,
+#         "web": 1
+#     }
         
-        headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-        }
+#         headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+#         }
         
-        files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
+#         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
         
-        response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
-        result = response.json()
-        if "path" in result:
-            print(f'已上传至{result["path"]}')
-        else:
-            print(result)
+#         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
+#         result = response.json()
+#         if "path" in result:
+#             print(f'已上传至{result["path"]}')
+#         else:
+#             print(result)
         
-        
+        subprocess.run(f"BaiduPCS-Go u /content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename} /{params.filename}  ", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     else:
         if udrive.c:
             lev = 1
