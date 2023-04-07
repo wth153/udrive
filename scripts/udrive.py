@@ -32,19 +32,6 @@ subprocess.run(curl_command, check=True)
 subprocess.run(unzip_command, check=True)
 shutil.copy('./BaiduPCS-Go-v3.9.1-linux-amd64/BaiduPCS-Go', '/usr/bin')
         
-        
-        
-# try:
-#     from baidupcs_py.baidupcs import BaiduPCSApi
-# except ImportError:
-#     if not launch.is_installed("baidupcs_py"):
-#         subprocess.run("pip install requests-toolbelt aget passlib", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-#         launch.run_pip("install BaiduPCS-Py --no-deps", "baidupcs_py --no-deps")
-#         #launch.run_pip("requests_toolbelt")
-#         from baidupcs_py.baidupcs import BaiduPCSApi
-
-# subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/auto.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/auto.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-# subprocess.run("curl -o /usr/local/lib/python3.9/dist-packages/uvicorn/loops/uvloop.py  https://raw.githubusercontent.com/encode/uvicorn/master/uvicorn/loops/uvloop.py", shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 
 class udrive:
     def __init__(self, ):
@@ -84,13 +71,6 @@ def udrive_save(c, baidu, k):
     with open("udrive.json", "w") as f:
         json.dump(udrive_dict, f)
 
-    # for k,v in udrive.drive.blocks.items():
-    #    if isinstance(v, gr.Checkbox) or isinstance(v, gr.Textbox):
-    #         udrive.locv.append(v.value)
-    # udrive_dict = dict(zip(udrive.lock, udrive.locv))
-    # for k, v in udrive_dict.items():
-    #     setattr(udrive, k, v)
-
 
 class Script(scripts.Script):
     def __init__(self) -> None:
@@ -126,60 +106,9 @@ def on_ui_tabs():
             btn = gr.Button("执行代码")
             btn.click(sendcode, inputs=code)
 
-            # if os.path.isfile("udrive.json"):
-            #     with open("udrive.json", "r") as f:
-            #         datas = json.load(f)
-            #     for k, v in datas.items():
-            #         if v == "" or v == None:
-            #             pass
-            #         else:
-            #             exec(f"{k}.value={v}")
 
-            # for k,v in locals().items():
-            #    if isinstance(v, gr.Checkbox) or isinstance(v, gr.Textbox):
-            #       udrive.lock.append(k)
 
     return [(drive, "Drive", "drive")]
-
-# def check(locpath,dpath):
-#     print("开始上传")
-#     if os.path.isdir(locpath):
-#       for root, dirs, files in os.walk(locpath):
-#         for file in files:
-#             dir_path = os.path.join(root, file)
-#             if dpath[-1]!='/':
-#                 dpath+='/'
-            
-            
-#             upload(dir_path,dpath+file)
-#     else:
-#         upload(locpath, dpath)     
-#     print("上传结束")
-# def upload(locpath, dpath):
-#     baiduupload(locpath,dpath)
-#     url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path={dpath}'
-#     params = {
-#         "async": 2,
-#         "onnest": "fail",
-#         "opera": "rename",
-#         "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
-#         "clienttype": 0,
-#         "app_id": 250528,
-#         "web": 1
-#     }
-    
-#     headers = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-#     }
-    
-#     files = {'file': open(locpath, 'rb')}
-#     response = requests.post(url, headers=headers, params=params, cookies={"BDUSS":udrive.k}, files=files)
-#     result = response.json()
-#     if "path" in result:
-#             print(f'已上传至{result["path"]}')
-#     else:
-#             print(result)
-
 
 
 def sendcode(code):
@@ -204,31 +133,9 @@ def baiduupload(loc,pan):
 def upload_file(params):
 
     if udrive.baidu:
-#         url = f'https://pan.baidu.com/rest/2.0/xpan/file?method=upload&path=/{params.filename}'
-#         param = {
-#         "async": 2,
-#         "onnest": "fail",
-#         "opera": "rename",
-#         "bdstoken": "2c404dab0010e59dbbd64aa7a6f9f9ad",
-#         "clienttype": 0,
-#         "app_id": 250528,
-#         "web": 1
-#     }
-        
-#         headers = {
-#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-#         }
-        
-#         files = {'file': open(f"/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}", 'rb')}
-        
-#         response = requests.post(url, headers=headers, params=param, cookies={"BDUSS":udrive.k}, files=files)
-#         result = response.json()
-#         if "path" in result:
-#             print(f'已上传至{result["path"]}')
-#         else:
-#             print(result)
         loc=f'/content/gdrive/MyDrive/sd/stable-diffusion-webui/{params.filename}'
-        baiduupload(loc,params.filename)
+        pandir=os.path.split(params.filename)[0]
+        baiduupload(loc,pandir)
     else:
         if udrive.c:
             lev = 1
